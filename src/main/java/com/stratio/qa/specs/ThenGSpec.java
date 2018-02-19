@@ -747,7 +747,7 @@ public class ThenGSpec extends BaseGSpec {
     }
 
     /*
-     * Check value stored in environment variable "is|matches|is higher than|is lower than|contains|is different from" to value provided
+     * Check value stored in environment variable "is|matches|is higher than|is lower than|contains||does not contain|is different from" to value provided
      *
      * @param envVar
      * @param value
@@ -779,11 +779,14 @@ public class ThenGSpec extends BaseGSpec {
             case "contains":
                 Assertions.assertThat(envVar).contains(value);
                 break;
+            case "does not contain":
+                Assertions.assertThat(envVar).doesNotContain(value);
+                break;
             case "is different from":
                 Assertions.assertThat(envVar).isNotEqualTo(value);
                 break;
             default:
-                Fail.fail("Not a valid comparison. Valid ones are: is | matches | is higher than | is lower than | contains | is different from");
+                Fail.fail("Not a valid comparison. Valid ones are: is | matches | is higher than | is lower than | contains | does not contain | is different from");
         }
     }
 

@@ -20,6 +20,12 @@ Feature: Simple run test
     When I run 'lss /tmp' in the ssh connection with exit status '127' and save the value in environment variable 'CUSEXSTAT'
     Then '!{CUSEXSTAT}' contains 'lss'
 
+  Scenario: Pipelines
+    When I run 'ls -la /tmp | grep total | grep a' in the ssh connection with exit status '0'
+    When I run 'ls -la /tmp | grep total && ls -la /tmp | grep total' in the ssh connection with exit status '0'
+    When I run 'ls -la /tmp | grep total | grep xxx' in the ssh connection with exit status '1'
+    When I run 'ls -la /tmp | grep total && ls -la /tmp | grep xxx' in the ssh connection with exit status '1'
+
   Scenario: Outbound Inbound file
     When I outbound copy 'exampleJSON.conf' through a ssh connection to '/tmp/exampleJSON.conf'
     Then I inbound copy '/tmp/exampleJSON.conf' through a ssh connection to 'fileFromSsh.conf'
